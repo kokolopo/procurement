@@ -25,7 +25,6 @@ func InitConfiguration() Config {
 		DB_NAME:        GetOrDefault("DB_NAME", "procurementDB"),
 		DB_PORT:        GetOrDefault("DB_PORT", "3306"),
 		DB_HOST:        GetOrDefault("DB_HOST", "database-1.cd72sjq0y6mo.ap-southeast-1.rds.amazonaws.com"),
-		JWT_KEY:        GetOrDefault("JWT_KEY", "FuFuFuFu"),
 	}
 }
 
