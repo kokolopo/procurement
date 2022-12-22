@@ -20,8 +20,8 @@ func InitConfiguration() Config {
 
 	return Config{
 		SERVER_ADDRESS: GetOrDefault("SERVER_ADDRESS", "0.0.0.0:8080"),
-		DB_USERNAME:    GetOrDefault("DB_USERNAME", "DB_USERNAME"),
-		DB_PASSWORD:    GetOrDefault("DB_PASSWORD", "DB_PASSWORD"),
+		DB_USERNAME:    GetOrDefault("DB_USERNAME", "admin"),
+		DB_PASSWORD:    GetOrDefault("DB_PASSWORD", "rahasia123"),
 		DB_NAME:        GetOrDefault("DB_NAME", "procurementDB"),
 		DB_PORT:        GetOrDefault("DB_PORT", "3306"),
 		DB_HOST:        GetOrDefault("DB_HOST", "database-1.cd72sjq0y6mo.ap-southeast-1.rds.amazonaws.com"),
