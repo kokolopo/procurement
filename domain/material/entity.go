@@ -1,6 +1,9 @@
 package material
 
-import "procurement/domain/supplier"
+import (
+	"procurement/domain/supplier"
+	"time"
+)
 
 type Material struct {
 	Id            int               `gorm:"primary_key;auto_increment;not_null"`
@@ -9,4 +12,6 @@ type Material struct {
 	Material_name string            `gorm:"type:varchar(100);not null"`
 	Material_type string            `gorm:"type:varchar(100);not null"`
 	Stock         int               `gorm:"type:int(100);not null"`
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
 }
