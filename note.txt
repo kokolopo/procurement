@@ -1,0 +1,6 @@
+fitur :
+
+1. list material
+2. liat permintaan dari gudang
+3. menerima permintaan dari gundang
+4. beli bahan ke suplier

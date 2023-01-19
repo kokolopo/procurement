@@ -25,6 +25,7 @@ func InitDatabase(config config.Config) {
 	} else {
 		fmt.Println("koneksi ke database berhasil!!!")
 	}
+
 	//DB.AutoMigrate(&user.User{}, &item.Item{})
 	for _, model := range RegisterModel() {
 		errModel := DB.Debug().AutoMigrate(model.Model)

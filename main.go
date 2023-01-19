@@ -6,6 +6,7 @@ import (
 	"procurement/database"
 	"procurement/domain/material"
 	"procurement/domain/purchase_request"
+	"procurement/domain/supplier"
 
 	"github.com/gin-gonic/gin"
 )
@@ -27,15 +28,20 @@ func main() {
 	purchaseService := purchase_request.NewPRService(purchaseReqRepo, materialRepository)
 	purchaseHandler := purchase_request.NewPurchaseRequestHandler(purchaseService)
 
+	supplierRepo := supplier.NewSupplierRepository(db)
+	supplierService := supplier.NewSupplierService(supplierRepo)
+	supplierHandler := supplier.NewSupplierHandler(supplierService)
+
 	r := gin.Default()
 
 	r.GET("", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
-			"message":           "hay, wellcome",
-			"/v1/materials":     "to get materials",
-			"/v1/materials/:id": "to get material",
-			"/v1/purchase-requests": "to get purchase request",
+			"message":                   "hay, wellcome",
+			"/v1/materials":             "to get materials",
+			"/v1/materials/:id":         "to get material",
+			"/v1/purchase-requests":     "to get purchase request",
 			"/v1/purchase-requests/:id": "to get purchase request",
+			"/v1/supplier":              "psot data supplier",
 		})
 	})
 
@@ -47,6 +53,9 @@ func main() {
 		v1.POST("/purchase-requests", purchaseHandler.CreateNewPurchaseRequest)
 		v1.GET("/purchase-requests", purchaseHandler.GetAll)
 		v1.GET("/purchase-requests/:id", purchaseHandler.GetById)
+
+		v1.POST("/supplier", supplierHandler.CreateNewSupplier)
+		v1.GET("/supplier", supplierHandler.GetAll)
 	}
 
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")

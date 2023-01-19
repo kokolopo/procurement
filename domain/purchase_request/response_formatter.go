@@ -3,18 +3,18 @@ package purchase_request
 import "time"
 
 type PRFormatter struct {
-	Id          int       `json:"id"`
-	Material_id int       `json:"material_id"`
-	Stock_need  int       `json:"stock_need"`
-	CreatedAt   time.Time `json:"created_at"`
+	Id           int       `json:"id"`
+	MaterialName string    `json:"material_name"`
+	Stock_need   int       `json:"stock_need"`
+	CreatedAt    time.Time `json:"created_at"`
 }
 
 func FormatPR(data PurchaseRequest) PRFormatter {
 	formatter := PRFormatter{
-		Id:          data.Id,
-		Material_id: data.Material_id,
-		Stock_need:  data.Stock_need,
-		CreatedAt:   data.CreatedAt,
+		Id:           data.Id,
+		MaterialName: data.MaterialName,
+		Stock_need:   data.Stock_need,
+		CreatedAt:    data.CreatedAt,
 	}
 
 	return formatter
