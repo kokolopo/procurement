@@ -21,15 +21,8 @@ func (s *service) Save(input RequestForm) (PurchaseRequest, error) {
 	var data PurchaseRequest
 
 	//tangkap nilai dari inputan
-	data.Material_id = input.MaterialId
+	data.MaterialName = input.MaterialName
 	data.Stock_need = input.StockNeed
-
-	//cek apakah material ada
-	material, err := s.materialRepo.FecthById(input.MaterialId)
-	if err != nil {
-		return data, err
-	}
-	data.Material = material
 
 	//save data yang sudah dimapping kedalam struct PR
 	newPR, err := s.repository.Save(data)
