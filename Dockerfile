@@ -1,10 +1,19 @@
-FROM golang:alpine AS builder
-RUN apk update && apk add --no-cache git
-WORKDIR /app
-COPY . .
-RUN go build -o tts
+FROM golang:1.18 as builder
 
-FROM alpine
 WORKDIR /app
-COPY --from=builder /app/tts /app
-CMD ["./tts"]
+
+COPY . .
+
+RUN go build -tags netgo -o main.app .
+
+
+# ------------------------------------
+
+
+FROM alpine:latest
+
+WORKDIR /kemasan
+
+COPY --from=builder /app/main.app .
+
+CMD [ "/kemasan/main.app" ]
