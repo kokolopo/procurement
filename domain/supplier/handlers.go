@@ -3,6 +3,7 @@ package supplier
 import (
 	"net/http"
 	"procurement/helper"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -46,4 +47,23 @@ func (h *SupplierHandler) GetAll(c *gin.Context) {
 	// formatter := FormatMaterials(materials)
 	res := helper.ApiResponse("Materials Data", 200, "Ok", suppliers)
 	c.JSON(http.StatusOK, res)
+}
+
+func (h *SupplierHandler) GetById(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(400, "id bukan angka")
+		return
+	}
+
+	supplier, err := h.supplierService.GetById(id)
+	if err != nil {
+		c.JSON(http.StatusBadGateway, "server error")
+		return
+	}
+
+	// formatter := FormatPR(supplier)
+	res := helper.ApiResponse("Purchase Request Data", 200, "Ok", supplier)
+	c.JSON(http.StatusOK, res)
+
 }

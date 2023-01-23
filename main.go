@@ -5,6 +5,7 @@ import (
 	"procurement/config"
 	"procurement/database"
 	"procurement/domain/material"
+	"procurement/domain/purchase_order"
 	"procurement/domain/purchase_request"
 	"procurement/domain/supplier"
 
@@ -27,6 +28,10 @@ func main() {
 	purchaseReqRepo := purchase_request.NewMaterialRepository(db)
 	purchaseService := purchase_request.NewPRService(purchaseReqRepo, materialRepository)
 	purchaseHandler := purchase_request.NewPurchaseRequestHandler(purchaseService)
+
+	pORepo := purchase_order.NewMaterialRepository(db)
+	pOService := purchase_order.NewPOService(pORepo)
+	pOHandler := purchase_order.NewPurchaseOrderHandler(pOService, purchaseService)
 
 	supplierRepo := supplier.NewSupplierRepository(db)
 	supplierService := supplier.NewSupplierService(supplierRepo)
@@ -54,8 +59,15 @@ func main() {
 		v1.GET("/purchase-requests", purchaseHandler.GetAll)
 		v1.GET("/purchase-requests/:id", purchaseHandler.GetById)
 
-		v1.POST("/supplier", supplierHandler.CreateNewSupplier)
-		v1.GET("/supplier", supplierHandler.GetAll)
+		v1.POST("/purchase-orders", pOHandler.CreateNewPurchaseOrder)
+		v1.GET("/purchase-orders", pOHandler.GetAll)
+		v1.GET("/purchase-orders/:id", pOHandler.GetById)
+		v1.DELETE("/purchase-orders/:id", pOHandler.Delete)
+		v1.PUT("/purchase-orders/:id", pOHandler.Update)
+
+		v1.POST("/suppliers", supplierHandler.CreateNewSupplier)
+		v1.GET("/suppliers", supplierHandler.GetAll)
+		v1.GET("/suppliers/:id", supplierHandler.GetById)
 	}
 
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")

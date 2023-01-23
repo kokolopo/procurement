@@ -3,6 +3,7 @@ package supplier
 type IService interface {
 	Save(input AddSuplier) (Supplier, error)
 	GetAll() ([]Supplier, error)
+	GetById(id int)(Supplier, error)
 }
 
 type service struct {
@@ -38,4 +39,13 @@ func (s *service) GetAll() ([]Supplier, error) {
 	}
 
 	return materials, nil
+}
+
+func (s *service) GetById(id int) (Supplier, error) {
+	supplier, err := s.repository.FecthById(id)
+	if err != nil {
+		return supplier, err
+	}
+
+	return supplier, nil
 }

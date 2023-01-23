@@ -21,10 +21,10 @@ func InitConfiguration() Config {
 	return Config{
 		SERVER_ADDRESS: GetOrDefault("SERVER_ADDRESS", "0.0.0.0:8080"),
 		DB_USERNAME:    GetOrDefault("DB_USERNAME", "root"),
-		DB_PASSWORD:    GetOrDefault("DB_PASSWORD", "rahasia123"),
-		DB_NAME:        GetOrDefault("DB_NAME", "procurementDB"),
+		DB_PASSWORD:    GetOrDefault("DB_PASSWORD", ""),
+		DB_NAME:        GetOrDefault("DB_NAME", "procurementdb"),
 		DB_PORT:        GetOrDefault("DB_PORT", "3306"),
-		DB_HOST:        GetOrDefault("DB_HOST", "35.232.92.82"),
+		DB_HOST:        GetOrDefault("DB_HOST", "localhost"),
 	}
 }
 
