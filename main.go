@@ -29,13 +29,13 @@ func main() {
 	purchaseService := purchase_request.NewPRService(purchaseReqRepo, materialRepository)
 	purchaseHandler := purchase_request.NewPurchaseRequestHandler(purchaseService)
 
-	pORepo := purchase_order.NewMaterialRepository(db)
-	pOService := purchase_order.NewPOService(pORepo)
-	pOHandler := purchase_order.NewPurchaseOrderHandler(pOService, purchaseService)
-
 	supplierRepo := supplier.NewSupplierRepository(db)
 	supplierService := supplier.NewSupplierService(supplierRepo)
 	supplierHandler := supplier.NewSupplierHandler(supplierService)
+
+	pORepo := purchase_order.NewMaterialRepository(db)
+	pOService := purchase_order.NewPOService(pORepo)
+	pOHandler := purchase_order.NewPurchaseOrderHandler(pOService, purchaseService, supplierService)
 
 	r := gin.Default()
 

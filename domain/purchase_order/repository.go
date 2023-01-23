@@ -30,7 +30,7 @@ func (r *repository) Save(data PurchaseOrder) (PurchaseOrder, error) {
 func (r *repository) FecthAll() ([]PurchaseOrder, error) {
 	var pOrder []PurchaseOrder
 
-	err := r.DB.Preload("PurchaseRequest").Find(&pOrder).Error
+	err := r.DB.Preload("PurchaseRequest").Preload("Supplier").Find(&pOrder).Error
 	if err != nil {
 		return pOrder, err
 	}
@@ -41,7 +41,7 @@ func (r *repository) FecthAll() ([]PurchaseOrder, error) {
 func (r *repository) FecthById(id int) (PurchaseOrder, error) {
 	var pOrder PurchaseOrder
 
-	err := r.DB.Where("id = ?", id).Preload("PurchaseRequest").Find(&pOrder).Error
+	err := r.DB.Where("id = ?", id).Preload("PurchaseRequest").Preload("Supplier").Find(&pOrder).Error
 	if err != nil {
 		return pOrder, err
 	}

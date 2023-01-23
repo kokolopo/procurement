@@ -3,6 +3,7 @@ package purchase_order
 import (
 	"net/http"
 	"procurement/domain/purchase_request"
+	"procurement/domain/supplier"
 	"procurement/helper"
 	"strconv"
 
@@ -12,10 +13,11 @@ import (
 type PurchaseOrderHandler struct {
 	purchaseOrderService IService
 	PurchaseRequest      purchase_request.IService
+	Supplier             supplier.IService
 }
 
-func NewPurchaseOrderHandler(purchaseOrderService IService, PurchaseRequest purchase_request.IService) *PurchaseOrderHandler {
-	return &PurchaseOrderHandler{purchaseOrderService, PurchaseRequest}
+func NewPurchaseOrderHandler(purchaseOrderService IService, PurchaseRequest purchase_request.IService, Supplier supplier.IService) *PurchaseOrderHandler {
+	return &PurchaseOrderHandler{purchaseOrderService, PurchaseRequest, Supplier}
 }
 
 func (h *PurchaseOrderHandler) CreateNewPurchaseOrder(c *gin.Context) {
@@ -38,6 +40,17 @@ func (h *PurchaseOrderHandler) CreateNewPurchaseOrder(c *gin.Context) {
 		return
 	}
 
+	// cek apakan id Supplier ada
+	supplier, err := h.Supplier.GetById(input.Supplier_id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, "cannot proses request")
+		return
+	}
+	if pr.Id != input.Supplier_id {
+		c.JSON(http.StatusBadRequest, "cannot proses request")
+		return
+	}
+
 	// record data PR
 	newOrder, err := h.purchaseOrderService.Save(input)
 	if err != nil {
@@ -47,6 +60,11 @@ func (h *PurchaseOrderHandler) CreateNewPurchaseOrder(c *gin.Context) {
 	newOrder.PurchaseRequest.Id = pr.Id
 	newOrder.PurchaseRequest.MaterialName = pr.MaterialName
 	newOrder.PurchaseRequest.Stock_need = pr.Stock_need
+	newOrder.Supplier.Id = supplier.Id
+	newOrder.Supplier.SupplierName = supplier.SupplierName
+	newOrder.Supplier.Email = supplier.Email
+	newOrder.Supplier.Phone = supplier.Phone
+	newOrder.Supplier.Address = supplier.Address
 
 	// formatter := FormatPR(newRequest)
 	res := helper.ApiResponse("Request Successfully Accepted", 202, "Accepted", newOrder)

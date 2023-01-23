@@ -21,6 +21,7 @@ func (s *service) Save(input InputPO) (PurchaseOrder, error) {
 
 	//tangkap nilai dari inputan
 	data.PurchaseRequest_id = input.PurchaseRequest_id
+	data.Supplier_id = input.Supplier_id
 	data.Quantity = input.Quantity
 
 	//save data yang sudah dimapping kedalam struct PR
