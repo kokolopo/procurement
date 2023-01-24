@@ -46,7 +46,7 @@ func (h *PurchaseOrderHandler) CreateNewPurchaseOrder(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, "cannot proses request")
 		return
 	}
-	if pr.Id != input.Supplier_id {
+	if supplier.Id != input.Supplier_id {
 		c.JSON(http.StatusBadRequest, "cannot proses request")
 		return
 	}
